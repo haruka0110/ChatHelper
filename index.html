@@ -1,24 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cash DOM Example</title>
-  <!-- 引入 Pico.css 提供漂亮樣式 -->
-  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-  <!-- 自訂 CSS -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>Hello, Cash DOM!</h1>
-    <p>這是用 Cash DOM 寫的互動示範。</p>
-    <button id="clickMe">點我一下</button>
-  </main>
-
-  <!-- 引入 Cash DOM CDN -->
-  <script src="https://unpkg.com/cash-dom/dist/cash.min.js"></script>
-  <!-- 自訂 JS -->
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cash DOM Example</title>
+    <!-- 引入 Pico.css 提供漂亮樣式 -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+    <!-- 自訂 CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container flex col border-box">
+      <div class="editor-actions flex-0 flex-between">
+        <div class="flex gap-1">
+          <button id="addAction">::::</button>
+          <button id="addActionStar">*()*</button>
+          <button id="addQuotation">「」</button>
+          <button id="addNameTag"></button>
+        </div>
+        <div>
+          <details id="editor-action-dropdown" class="dropdown">
+            <summary role="button" class="secondary">🛠️</summary>
+            <ul>
+              <li id="copy"><a href="#">複製</a></li>
+              <li id="save"><a href="#">暫存</a></li>
+              <li id="load"><a href="#">讀取</a></li>
+              <li id="clear"><a href="#">清空</a></li>
+            </ul>
+          </details>
+        </div>
+      </div>
+      <div class="cursor-controls flex-between">
+        <button id="cursor-left">←</button>
+        <button id="cursor-right">→</button>
+      </div>
+      <textarea class="grow-1" id="editor"></textarea>
+      <div class="flex-end">
+        <button id="setName" class="outline secondary"></button>
+      </div>
+    </main>
+    <div id="toast" class="toast hidden">已複製到剪貼簿！</div>
+    <div id="save-indicator" class="save-indicator"></div>
+    <!-- 引入 Cash DOM CDN -->
+    <script src="https://unpkg.com/cash-dom/dist/cash.min.js"></script>
+    <!-- 自訂 JS -->
+    <script src="script.js"></script>
+  </body>
 </html>

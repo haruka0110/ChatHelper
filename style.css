@@ -1,0 +1,117 @@
+body {
+  --padding-m: 8px;
+  --padding-l: 16px;
+  --padding-s: 4px;
+}
+
+.dropdown {
+  margin: 0;
+}
+
+.border-box {
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.row {
+  flex-direction: row;
+}
+.col {
+  flex-direction: column;
+}
+.grow-0 {
+  flex: 0;
+}
+.grow-1 {
+  flex: 1;
+}
+.grow-auto {
+  flex: auto;
+}
+
+main.flex {
+  gap: var(--padding-m);
+}
+
+.gap-1 {
+  gap: var(--padding-s);
+}
+
+main {
+  height: 100vh;
+}
+
+/* Toast 樣式 */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.hidden {
+  transform: translateX(-50%) translateY(20px);
+}
+
+/* 儲存狀態燈 */
+.save-indicator {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--pico-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+.save-indicator.active {
+  opacity: 1;
+}
+
+.cursor-controls button.holding {
+  transform: scale(1.1);
+  background-color: var(--picoprimary);
+  color: white;
+  box-shadow: 0 0 8px var(--picoprimary);
+  transition: all 0.2s ease;
+}
+
+#setName {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+}
