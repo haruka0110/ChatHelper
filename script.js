@@ -134,9 +134,13 @@ attachCursorControl("#cursor-left", -1);
 attachCursorControl("#cursor-right", 1);
 
 const addTextToEditor = (text, moveCursorToMiddle) => {
-  const newText = $("#editor").val() + text;
+  const selectionStart = $("#editor")[0].selectionStart;
+  const value = $("#editor").val();
+  const newText =
+    value.substring(0, selectionStart) + text + value.substring(selectionStart);
   $("#editor").val(newText);
-  const newPos = newText.length - (moveCursorToMiddle ? text.length / 2 : 0);
+  const newPos =
+    selectionStart + (moveCursorToMiddle ? text.length / 2 : text.length);
   const textarea = $("#editor")[0];
   textarea.setSelectionRange(newPos, newPos);
   textarea.focus();
@@ -177,6 +181,7 @@ $("#setName").on("click", () => {
   if (newName !== null && newName.trim() !== "") {
     localStorage.setItem(NAME_KEY, newName.trim());
     $("#setName").text(`👤 ${newName.trim()}`);
+    loadName();
     showToast("已設定名字");
   }
 });
