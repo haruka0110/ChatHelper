@@ -16,37 +16,117 @@
     <main class="container flex col border-box">
       <div class="editor-actions flex-0 flex-between">
         <div class="flex gap-1">
-          <button id="addAction">::::</button>
-          <button id="addActionStar">*()*</button>
-          <button id="addQuotation">「」</button>
-          <button id="addNameTag"></button>
+          <button class="btn" id="addAction">::::</button>
+          <!-- <button class="btn" id="addActionStar">*()*</button> -->
+          <button class="btn" id="addQuotation">「」</button>
+          <button class="btn" id="addEllipsis">⋯⋯</button>
         </div>
         <div>
-          <details id="editor-action-dropdown" class="dropdown">
-            <summary role="button" class="secondary">🛠️</summary>
-            <ul>
+          <details id="editorActionDropdown" class="dropdown">
+            <summary class="btn secondary" role="button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-wrench-icon lucide-wrench"
+              >
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+                />
+              </svg>
+            </summary>
+            <ul class="dropdown-menu">
               <li id="copy"><a href="#">複製</a></li>
               <li id="save"><a href="#">暫存</a></li>
               <li id="load"><a href="#">讀取</a></li>
               <li id="clear"><a href="#">清空</a></li>
+              <li id="setCounter"><a href="#">設定計數</a></li>
             </ul>
           </details>
         </div>
       </div>
       <div class="cursor-controls flex-between">
-        <button id="cursor-left">←</button>
-        <button id="cursor-right">→</button>
+        <button class="btn" id="cursorLeft">←</button>
+        <div class="flex gap-1 counter-actions" id="counterActions">
+          <div class="left-quotation"></div>
+          <button class="btn" id="counterMinus">-</button>
+          <button class="btn" id="counterAdd">+</button>
+          <div class="right-quotation"></div>
+        </div>
+        <button class="btn" id="cursorRight">→</button>
       </div>
-      <textarea class="grow-1" id="editor"></textarea>
-      <div class="flex-end">
-        <button id="setName" class="outline secondary"></button>
+      <div class="grow-1 flex col">
+        <div class="character-label top-rounded" id="characterLabel">[0]</div>
+        <textarea class="grow-1 top-not-rounded" id="editor"></textarea>
+      </div>
+      <div class="flex-between gap-1">
+        <div>
+          <button id="toggleCounting" class="check-button checked">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-check-icon lucide-check"
+            >
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+            計數
+          </button>
+          <button id="toggleCharacterLabel" class="check-button checked">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-check-icon lucide-check"
+            >
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+            名稱
+          </button>
+        </div>
+        <button id="setName" class="outline secondary flex flex-center gap-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-user-icon lucide-user"
+          >
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span id="setNameText"></span>
+        </button>
       </div>
     </main>
     <div id="toast" class="toast hidden">已複製到剪貼簿！</div>
-    <div id="save-indicator" class="save-indicator"></div>
+    <div id="saveIndicator" class="save-indicator"></div>
     <!-- 引入 Cash DOM CDN -->
     <script src="https://unpkg.com/cash-dom/dist/cash.min.js"></script>
     <!-- 自訂 JS -->
-    <script src="script.js"></script>
+    <script type="module" src="main.js"></script>
   </body>
 </html>

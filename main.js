@@ -1,0 +1,189 @@
+// 主初始化與事件註冊
+import {
+  showToast,
+  setRealViewportHeight,
+  getEditorActionHandler,
+  attachHoldAction,
+  copyToClipboard,
+} from "./utils.js";
+import {
+  counter,
+  increaseCounter,
+  decreaseCounter,
+  setCounter,
+  loadCounter,
+  saveCounter,
+} from "./counter.js";
+import {
+  loadEditorContent,
+  clearEditorContent,
+  moveCursor,
+  addTextToEditor,
+  saveEditorContent,
+} from "./editor.js";
+import { setting, saveSetting, loadSetting } from "./settings.js";
+import { getCharacterLabel, setCharacterLabel } from "./characterLabel.js";
+import { setUserName, userName, loadUserName } from "./userName.js";
+import {
+  setCharacterLabelCheckButton,
+  setCountingCheckButton,
+} from "./settingButton.js";
+
+// 使用工具函式重構
+function attachCursorControl(buttonId, offset) {
+  attachHoldAction(buttonId, () => moveCursor(offset), {
+    holdDelay: 800,
+    repeatInterval: 100,
+    holdingClass: "holding",
+  });
+}
+
+const setCounterActions = (isCounting) => {
+  if (isCounting) $("#counterActions").removeClass("hidden");
+  else $("#counterActions").addClass("hidden");
+};
+
+$(document).ready(() => {
+  // 初始化與事件註冊
+  loadSetting();
+  loadUserName();
+  loadCounter();
+  setCounterActions(setting.isCounting);
+  setCountingCheckButton(setting.isCounting);
+  setCharacterLabelCheckButton(setting.isCharacterLabel);
+  setCharacterLabel(setting, counter, userName);
+
+  // ... 其他初始化 ...
+  setRealViewportHeight();
+  window.addEventListener("resize", setRealViewportHeight);
+  window.addEventListener("orientationchange", setRealViewportHeight);
+
+  // 依需求註冊事件
+  $("#copy").on(
+    "click",
+    getEditorActionHandler(() => {
+      copyToClipboard(getCharacterLabel() + "\n\n" + getEditorContent());
+    })
+  );
+
+  // 儲存內容到 localStorage
+  $("#save").on(
+    "click",
+    getEditorActionHandler(() => {
+      saveEditorContent();
+      showToast("已暫存內容");
+    })
+  );
+
+  // 從 localStorage 載入內容
+  $("#load").on("click", getEditorActionHandler(loadEditorContent));
+
+  // 清除編輯器的內容
+  $("#clear").on(
+    "click",
+    getEditorActionHandler(() => {
+      clearEditorContent();
+      showToast("已清除內容");
+    })
+  );
+
+  // 設定計數器
+  $("#setCounter").on(
+    "click",
+    getEditorActionHandler(() => {
+      const newCounter = prompt("請輸入計數值：", counter);
+      const parsedCounter = parseInt(newCounter, 10);
+      if (
+        !isNaN(parsedCounter) &&
+        parsedCounter >= 0 &&
+        parsedCounter <= 9999
+      ) {
+        setCounter(parsedCounter);
+        setCharacterLabel(setting, parsedCounter, userName);
+        showToast("計數已更新");
+      } else {
+        showToast("請輸入有效的計數值（0-9999）");
+      }
+    })
+  );
+
+  // 左右移動游標
+  attachCursorControl("#cursorLeft", -1);
+  attachCursorControl("#cursorRight", 1);
+
+  // counter 操作
+  attachHoldAction(
+    "#counterMinus",
+    () => {
+      decreaseCounter(false);
+      setCharacterLabel(setting, counter, userName);
+    },
+    {
+      holdDelay: 800,
+      repeatInterval: 100,
+      holdingClass: "holding",
+      onClick: saveCounter,
+      onRelease: saveCounter,
+    }
+  );
+  attachHoldAction(
+    "#counterAdd",
+    () => {
+      increaseCounter(false);
+      setCharacterLabel(setting, counter, userName);
+    },
+    {
+      holdDelay: 800,
+      repeatInterval: 100,
+      holdingClass: "holding",
+      onClick: saveCounter,
+      onRelease: saveCounter,
+    }
+  );
+
+  // 加入文字到編輯器
+  $("#addAction").on("click", () => {
+    addTextToEditor("::::", true);
+  });
+
+  // $("#addActionStar").on("click", () => {
+  //   addTextToEditor("*()*", true);
+  // });
+
+  $("#addQuotation").on("click", () => {
+    addTextToEditor("「」", true);
+  });
+
+  $("#addEllipsis").on("click", () => {
+    addTextToEditor("⋯⋯", false);
+  });
+
+  // 設定是否要使用計數器
+  $("#toggleCounting").on("click", () => {
+    setting.isCounting = !setting.isCounting;
+    setCountingCheckButton(setting.isCounting);
+    setCounterActions(setting.isCounting);
+    setCharacterLabel(setting, counter, userName);
+    saveSetting();
+    showToast(`計數功能已${setting.isCounting ? "開啟" : "關閉"}`);
+  });
+
+  // 設定是否加入角色名稱
+  $("#toggleCharacterLabel").on("click", () => {
+    setting.isCharacterLabel = !setting.isCharacterLabel;
+    setCharacterLabelCheckButton(setting.isCharacterLabel);
+    setCharacterLabel(setting, counter, userName);
+    saveSetting();
+    showToast(`角色標籤已${setting.isCharacterLabel ? "開啟" : "關閉"}`);
+  });
+
+  // 點擊後彈出 prompt 設定名字
+  $("#setName").on("click", () => {
+    const newName = prompt("請輸入你的名字：", userName ?? "")?.trim();
+    const success = setUserName(newName);
+    success && showToast("已設定名字");
+  });
+
+  // 每 10 秒自動儲存
+  setInterval(saveEditorContent, 10000); // 10000 ms = 10 秒
+});
