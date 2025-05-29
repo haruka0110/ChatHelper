@@ -63,7 +63,7 @@ main.flex {
 }
 
 main {
-  height: calc(var(--real-vh, 1vh) * 100);
+  height: var(--full-height, 100vh);
 }
 
 .hidden {

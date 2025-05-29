@@ -57,8 +57,7 @@ $(document).ready(() => {
 
   // ... 其他初始化 ...
   setRealViewportHeight();
-  window.addEventListener("resize", setRealViewportHeight);
-  window.addEventListener("orientationchange", setRealViewportHeight);
+  visualViewport.addEventListener("resize", setRealViewportHeight);
 
   // 依需求註冊事件
   $("#copy").on(

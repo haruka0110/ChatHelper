@@ -13,8 +13,10 @@ export function showToast(message) {
 }
 
 export function setRealViewportHeight() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--real-vh", `${vh}px`);
+  document.documentElement.style.setProperty(
+    "--full-height",
+    `${window.visualViewport.height}px`
+  );
 }
 
 export function saveToLocalStorage(key, value) {
