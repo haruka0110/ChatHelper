@@ -43,6 +43,8 @@ const setCounterActions = (isCounting) => {
   else $("#counterActions").addClass("hidden");
 };
 
+let isContentChanged = false;
+
 $(document).ready(() => {
   // 初始化與事件註冊
   loadSetting();
@@ -184,6 +186,17 @@ $(document).ready(() => {
     success && showToast("已設定名字");
   });
 
+  $("#editor").on("input", () => {
+    // 當編輯器內容變更時，紀錄已變更內容
+    isContentChanged = true;
+  });
+
+  isContentChanged = false; // 初始化為未變更
+
   // 每 10 秒自動儲存
-  setInterval(saveEditorContent, 10000); // 10000 ms = 10 秒
+  setInterval(() => {
+    if (!isContentChanged) return; // 如果內容沒有變更，則不儲存
+    isContentChanged = false; // 重置變更狀態
+    saveEditorContent();
+  }, 10000); // 10000 ms = 10 秒
 });
