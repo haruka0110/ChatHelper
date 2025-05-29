@@ -3,10 +3,6 @@ html {
   --padding-m: 8px;
   --padding-l: 16px;
   --padding-s: 4px;
-  height: var(--full-height);
-  overflow: hidden !important;
-  overscroll-behavior: none;
-  touch-action: none;
 }
 
 .dropdown {

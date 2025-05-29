@@ -18,6 +18,7 @@ import {
   loadEditorContent,
   clearEditorContent,
   moveCursor,
+  moveCursorLine,
   addTextToEditor,
   saveEditorContent,
 } from "./editor.js";
@@ -119,34 +120,69 @@ $(document).ready(() => {
   attachCursorControl("#cursorLeft", -1);
   attachCursorControl("#cursorRight", 1);
 
-  // counter 操作
+  // 上下移動游標
   attachHoldAction(
-    "#counterMinus",
+    "#cursorUp",
+    () => {
+      moveCursorLine(-1);
+    },
+    {
+      holdDelay: 800,
+      repeatInterval: 100,
+      holdingClass: "holding",
+    }
+  );
+  attachHoldAction(
+    "#cursorDown",
+    () => {
+      moveCursorLine(1);
+    },
+    {
+      holdDelay: 800,
+      repeatInterval: 100,
+      holdingClass: "holding",
+    }
+  );
+
+  // counter 操作
+  const counterHoldOptioins = {
+    holdDelay: 800,
+    repeatInterval: 100,
+    holdingClass: "holding",
+    onClick: saveCounter,
+    onRelease: saveCounter,
+  };
+  attachHoldAction(
+    "#mobileCounterMinus",
     () => {
       decreaseCounter(false);
       setCharacterLabel(setting, counter, userName);
     },
-    {
-      holdDelay: 800,
-      repeatInterval: 100,
-      holdingClass: "holding",
-      onClick: saveCounter,
-      onRelease: saveCounter,
-    }
+    counterHoldOptioins
   );
   attachHoldAction(
-    "#counterAdd",
+    "#mobileCounterAdd",
     () => {
       increaseCounter(false);
       setCharacterLabel(setting, counter, userName);
     },
-    {
-      holdDelay: 800,
-      repeatInterval: 100,
-      holdingClass: "holding",
-      onClick: saveCounter,
-      onRelease: saveCounter,
-    }
+    counterHoldOptioins
+  );
+  attachHoldAction(
+    "#desktopCounterMinus",
+    () => {
+      decreaseCounter(false);
+      setCharacterLabel(setting, counter, userName);
+    },
+    counterHoldOptioins
+  );
+  attachHoldAction(
+    "#desktopCounterAdd",
+    () => {
+      increaseCounter(false);
+      setCharacterLabel(setting, counter, userName);
+    },
+    counterHoldOptioins
   );
 
   // 加入文字到編輯器
@@ -205,4 +241,19 @@ $(document).ready(() => {
     isContentChanged = false; // 重置變更狀態
     saveEditorContent();
   }, 10000); // 10000 ms = 10 秒
+
+  // RWD: 根據 userAgent 切換 .mobile/.desktop 顯示
+  function setDeviceVisibility() {
+    const isMobile = /iPhone|iPad|iPod|Android|Mobile/i.test(
+      navigator.userAgent
+    );
+    document.querySelectorAll(".mobile").forEach((el) => {
+      el.style.display = isMobile ? "block" : "none";
+    });
+    document.querySelectorAll(".desktop").forEach((el) => {
+      el.style.display = isMobile ? "none" : "block";
+    });
+  }
+  setDeviceVisibility();
+  window.addEventListener("resize", setDeviceVisibility);
 });

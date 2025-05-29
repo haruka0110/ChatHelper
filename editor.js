@@ -43,6 +43,8 @@ export function moveCursor(offset) {
   textarea.focus();
 }
 
+window["moveCursor"] = moveCursor; // 讓全域可用
+
 export function addTextToEditor(text, moveCursorToMiddle) {
   const selectionStart = $("#editor")[0].selectionStart;
   const value = $("#editor").val();
@@ -58,4 +60,37 @@ export function addTextToEditor(text, moveCursorToMiddle) {
 
 export function getEditorContent() {
   return $("#editor").val();
+}
+
+export function moveCursorLine(direction) {
+  const textarea = $("#editor")[0];
+  const value = textarea.value;
+  const pos = textarea.selectionStart;
+  // 取得目前游標所在行的開始與結束
+  const before = value.slice(0, pos);
+  const after = value.slice(pos);
+  const lines = value.split("\n");
+  let line = before.split("\n").length - 1;
+  let col = before.length - before.lastIndexOf("\n") - 1;
+
+  if (direction === -1 && line > 0) {
+    // 上一行
+    const prevLineLen = lines[line - 1].length;
+    const newCol = Math.min(prevLineLen, col);
+    // 計算新游標位置
+    let newPos = 0;
+    for (let i = 0; i < line - 1; i++) newPos += lines[i].length + 1;
+    newPos += newCol;
+    textarea.setSelectionRange(newPos, newPos);
+    textarea.focus();
+  } else if (direction === 1 && line < lines.length - 1) {
+    // 下一行
+    const nextLineLen = lines[line + 1].length;
+    const newCol = Math.min(nextLineLen, col);
+    let newPos = 0;
+    for (let i = 0; i < line + 1; i++) newPos += lines[i].length + 1;
+    newPos += newCol;
+    textarea.setSelectionRange(newPos, newPos);
+    textarea.focus();
+  }
 }

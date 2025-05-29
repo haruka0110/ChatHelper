@@ -21,7 +21,15 @@
           <button class="btn" id="addQuotation">「」</button>
           <button class="btn" id="addEllipsis">⋯⋯</button>
         </div>
-        <div>
+        <div class="flex gap-1">
+          <div class="desktop">
+            <div class="flex gap-1 counter-actions" id="desktopCounterActions">
+              <div class="left-quotation"></div>
+              <button class="btn" id="desktopCounterMinus">-</button>
+              <button class="btn" id="desktopCounterAdd">+</button>
+              <div class="right-quotation"></div>
+            </div>
+          </div>
           <details id="editorActionDropdown" class="dropdown">
             <summary class="btn secondary" role="button">
               <svg
@@ -51,15 +59,23 @@
           </details>
         </div>
       </div>
-      <div class="cursor-controls flex-between">
-        <button class="btn" id="cursorLeft">←</button>
-        <div class="flex gap-1 counter-actions" id="counterActions">
-          <div class="left-quotation"></div>
-          <button class="btn" id="counterMinus">-</button>
-          <button class="btn" id="counterAdd">+</button>
-          <div class="right-quotation"></div>
+      <div class="mobile">
+        <div class="cursor-controls flex-between">
+          <div class="flex gap-1">
+            <button class="btn" id="cursorLeft">←</button>
+            <button class="btn" id="cursorUp">↑</button>
+          </div>
+          <div class="flex gap-1 counter-actions" id="mobileCounterActions">
+            <div class="left-quotation"></div>
+            <button class="btn" id="mobileCounterMinus">-</button>
+            <button class="btn" id="mobileCounterAdd">+</button>
+            <div class="right-quotation"></div>
+          </div>
+          <div class="flex gap-1">
+            <button class="btn" id="cursorDown">↓</button>
+            <button class="btn" id="cursorRight">→</button>
+          </div>
         </div>
-        <button class="btn" id="cursorRight">→</button>
       </div>
       <div class="grow-1 flex col">
         <div class="character-label top-rounded" id="characterLabel">[0]</div>
