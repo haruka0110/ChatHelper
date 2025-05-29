@@ -1,5 +1,5 @@
 // 設定切換
-import { showToast, saveToLocalStorage, loadFromLocalStorage } from "./utils.js";
+import { loadFromLocalStorage, saveToLocalStorage } from "./utils.js";
 
 export const STORAGE_KEY_SETTING = "chat-editor-setting";
 export let setting = { isCounting: true, isCharacterLabel: true };

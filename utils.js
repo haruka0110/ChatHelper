@@ -100,3 +100,26 @@ export function attachHoldAction(buttonId, action, options = {}) {
   button.addEventListener("touchend", stop);
   button.addEventListener("touchcancel", stop);
 }
+
+// 防止 iOS/Android 鍵盤彈出時外層可捲動
+function lockBodyScroll(lock) {
+  if (lock) {
+    document.body.style.position = "fixed";
+    document.body.style.width = "100vw";
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.position = "";
+    document.body.style.width = "";
+    document.body.style.overflow = "";
+  }
+}
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", () => {
+    if (window.visualViewport.height < window.innerHeight * 0.8) {
+      lockBodyScroll(true);
+    } else {
+      lockBodyScroll(false);
+    }
+  });
+}

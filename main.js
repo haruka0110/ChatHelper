@@ -58,6 +58,13 @@ $(document).ready(() => {
   // ... 其他初始化 ...
   setRealViewportHeight();
   visualViewport.addEventListener("resize", setRealViewportHeight);
+  document.addEventListener(
+    "touchmove",
+    function (e) {
+      e.preventDefault();
+    },
+    { passive: false }
+  );
 
   // 依需求註冊事件
   $("#copy").on(
