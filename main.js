@@ -103,17 +103,14 @@ $(document).ready(() => {
     getEditorActionHandler(() => {
       const newCounter = prompt("請輸入計數值：", counter);
       const parsedCounter = parseInt(newCounter, 10);
-      if (
-        !isNaN(parsedCounter) &&
-        parsedCounter >= 0 &&
-        parsedCounter <= 9999
-      ) {
-        setCounter(parsedCounter);
-        setCharacterLabel(setting, parsedCounter, userName);
-        showToast("計數已更新");
-      } else {
+      if (isNaN(parsedCounter)) return;
+      else if (parsedCounter < 0 && parsedCounter > 9999) {
         showToast("請輸入有效的計數值（0-9999）");
+        return;
       }
+      setCounter(parsedCounter);
+      setCharacterLabel(setting, parsedCounter, userName);
+      showToast("計數已更新");
     })
   );
 
