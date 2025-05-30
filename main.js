@@ -21,6 +21,7 @@ import {
   moveCursorLine,
   addTextToEditor,
   saveEditorContent,
+  getEditorContent,
 } from "./editor.js";
 import { setting, saveSetting, loadSetting } from "./settings.js";
 import { getCharacterLabel, setCharacterLabel } from "./characterLabel.js";
