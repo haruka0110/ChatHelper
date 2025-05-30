@@ -226,6 +226,8 @@ $(document).ready(() => {
   $("#setName").on("click", () => {
     const newName = prompt("請輸入你的名字：", userName ?? "")?.trim();
     const success = setUserName(newName);
+    if (!success) return;
+    setCharacterLabel(setting, counter, userName);
     success && showToast("已設定名字");
   });
 
