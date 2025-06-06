@@ -94,3 +94,15 @@ export function moveCursorLine(direction) {
     textarea.focus();
   }
 }
+
+export function moveEditorScroll(direction) {
+  const editor = $("#editor")[0];
+  const scrollAmount = 50; // 每次滾動的像素數
+  editor.scrollTop = Math.max(
+    0,
+    Math.min(
+      editor.scrollHeight - editor.clientHeight,
+      editor.scrollTop + scrollAmount * direction
+    )
+  );
+}

@@ -79,9 +79,15 @@
       </div>
       <div class="grow-1 flex col">
         <div class="character-label top-rounded" id="characterLabel">[0]</div>
-        <textarea class="grow-1 top-not-rounded" id="editor"></textarea>
+        <div class="grow-1 flex">
+          <textarea class="grow-1 top-not-rounded" id="editor"></textarea>
+          <div class="flex col flex-between editor-scroll">
+            <button class="btn" id="editorScrollUp">↑</button>
+            <button class="btn" id="editorScrollDown">↓</button>
+          </div>
+        </div>
       </div>
-      <div class="flex-between gap-1">
+      <div class="flex-between gap-1 footer">
         <div>
           <button id="toggleCounting" class="check-button checked">
             <svg

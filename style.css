@@ -195,6 +195,15 @@ button {
   border-left: none;
 }
 
+.editor-scroll {
+  margin-bottom: var(--pico-spacing);
+  border-right: var(--pico-border-width) solid
+    var(--pico-form-element-border-color);
+  border-bottom: var(--pico-border-width) solid
+    var(--pico-form-element-border-color);
+  border-bottom-right-radius: var(--pico-border-radius);
+}
+
 /* RWD: 手機/桌機顯示切換 */
 @media (min-width: 576px) {
   .mobile {

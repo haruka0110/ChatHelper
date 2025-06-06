@@ -22,6 +22,7 @@ import {
   addTextToEditor,
   saveEditorContent,
   getEditorContent,
+  moveEditorScroll,
 } from "./editor.js";
 import { setting, saveSetting, loadSetting } from "./settings.js";
 import { getCharacterLabel, setCharacterLabel } from "./characterLabel.js";
@@ -183,6 +184,27 @@ $(document).ready(() => {
     counterHoldOptioins
   );
 
+  // editor scroll 操作
+  const editorScrollHoldOptioins = {
+    holdDelay: 800,
+    repeatInterval: 100,
+    holdingClass: "holding",
+  };
+  attachHoldAction(
+    "#editorScrollUp",
+    () => {
+      moveEditorScroll(-1);
+    },
+    editorScrollHoldOptioins
+  );
+  attachHoldAction(
+    "#editorScrollDown",
+    () => {
+      moveEditorScroll(1);
+    },
+    editorScrollHoldOptioins
+  );
+
   // 加入文字到編輯器
   $("#addAction").on("click", () => {
     addTextToEditor("::::", true);
@@ -229,10 +251,17 @@ $(document).ready(() => {
     success && showToast("已設定名字");
   });
 
-  $("#editor").on("input", () => {
-    // 當編輯器內容變更時，紀錄已變更內容
-    isContentChanged = true;
-  });
+  $("#editor")
+    .on("input", () => {
+      // 當編輯器內容變更時，紀錄已變更內容
+      isContentChanged = true;
+    })
+    .on("focus", () => {
+      $(".footer").addClass("desktop"); // 當編輯器獲得焦點時，在 mobile 寬度下隱藏頁腳
+    })
+    .on("blur", () => {
+      $(".footer").removeClass("desktop"); // 當編輯器失去焦點時，在 mobile 寬度下顯示頁腳
+    });
 
   isContentChanged = false; // 初始化為未變更
 
