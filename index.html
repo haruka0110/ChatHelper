@@ -79,11 +79,14 @@
       </div>
       <div class="grow-1 flex col">
         <div class="character-label top-rounded" id="characterLabel">[0]</div>
-        <div class="grow-1 flex">
+        <div class="grow-1 flex editor-container">
+          <div id="saveIndicator" class="save-indicator"></div>
           <textarea class="grow-1 top-not-rounded" id="editor"></textarea>
           <div class="flex col flex-between editor-scroll">
-            <button class="btn" id="editorScrollUp">↑</button>
-            <button class="btn" id="editorScrollDown">↓</button>
+            <button class="btn outline secondary" id="editorScrollUp">↑</button>
+            <button class="btn outline secondary" id="editorScrollDown">
+              ↓
+            </button>
           </div>
         </div>
       </div>
@@ -145,7 +148,6 @@
       </div>
     </main>
     <div id="toast" class="toast hidden">已複製到剪貼簿！</div>
-    <div id="saveIndicator" class="save-indicator"></div>
     <!-- 引入 Cash DOM CDN -->
     <script src="https://unpkg.com/cash-dom/dist/cash.min.js"></script>
     <!-- 自訂 JS -->
