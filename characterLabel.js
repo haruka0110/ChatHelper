@@ -1,6 +1,6 @@
 export function setCharacterLabel(setting, counter, userName) {
   if (!setting.isCounting && !setting.isCharacterLabel) {
-    $("#characterLabel").addClass("hidden");
+    $("#characterLabel").text("").addClass("hidden");
     $("#editor").addClass("top-rounded").removeClass("top-not-rounded");
     return;
   } else {
@@ -15,5 +15,6 @@ export function setCharacterLabel(setting, counter, userName) {
 }
 
 export function getCharacterLabel() {
-  return $("#characterLabel").text();
+  const text = $("#characterLabel").text();
+  return text ? text + "\n\n" : "";
 }

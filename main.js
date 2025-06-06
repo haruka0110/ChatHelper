@@ -72,7 +72,7 @@ $(document).ready(() => {
   $("#copy").on(
     "click",
     getEditorActionHandler(() => {
-      copyToClipboard(getCharacterLabel() + "\n\n" + getEditorContent());
+      copyToClipboard(getCharacterLabel() + getEditorContent());
     })
   );
 
@@ -206,6 +206,7 @@ $(document).ready(() => {
     setCountingCheckButton(setting.isCounting);
     setCounterActions(setting.isCounting);
     setCharacterLabel(setting, counter, userName);
+    $(".counter-actions").toggleClass("hidden", !setting.isCounting);
     saveSetting();
     showToast(`計數功能已${setting.isCounting ? "開啟" : "關閉"}`);
   });
@@ -241,19 +242,4 @@ $(document).ready(() => {
     isContentChanged = false; // 重置變更狀態
     saveEditorContent();
   }, 10000); // 10000 ms = 10 秒
-
-  // RWD: 根據 userAgent 切換 .mobile/.desktop 顯示
-  function setDeviceVisibility() {
-    const isMobile = /iPhone|iPad|iPod|Android|Mobile/i.test(
-      navigator.userAgent
-    );
-    document.querySelectorAll(".mobile").forEach((el) => {
-      el.style.display = isMobile ? "block" : "none";
-    });
-    document.querySelectorAll(".desktop").forEach((el) => {
-      el.style.display = isMobile ? "none" : "block";
-    });
-  }
-  setDeviceVisibility();
-  window.addEventListener("resize", setDeviceVisibility);
 });

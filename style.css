@@ -194,3 +194,16 @@ button {
   border: 1px solid var(--pico-secondary);
   border-left: none;
 }
+
+/* RWD: 手機/桌機顯示切換 */
+@media (min-width: 576px) {
+  .mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .desktop {
+    display: none !important;
+  }
+}
