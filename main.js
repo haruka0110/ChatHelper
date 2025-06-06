@@ -188,9 +188,9 @@ $(document).ready(() => {
     addTextToEditor("::::", true);
   });
 
-  // $("#addActionStar").on("click", () => {
-  //   addTextToEditor("*()*", true);
-  // });
+  $("#addActionStar").on("click", () => {
+    addTextToEditor("*()*", true);
+  });
 
   $("#addQuotation").on("click", () => {
     addTextToEditor("「」", true);
